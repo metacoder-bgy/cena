@@ -4,16 +4,16 @@ module.exports = (app) ->
   ########################################
 
   # General Sub-docs Schemas
-  require('./schema/Note') app
-  require('./schema/Status') app
-  require('./schema/StatusLog') app
-  require('./schema/Category') app
+  # require('./schema/Note') app
+  # require('./schema/Status') app
+  # require('./schema/StatusLog') app
+  # require('./schema/Category') app
 
   # User System Schemas
-  require('./schema/User') app
-  require('./schema/Admin') app
-  require('./schema/AdminGroup') app
-  require('./schema/Account') app
+  # require('./schema/User') app
+  # require('./schema/Admin') app
+  # require('./schema/AdminGroup') app
+  # require('./schema/Account') app
 
   ########################################
   ###     Load Application Modules     ###
