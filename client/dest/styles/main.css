@@ -1,0 +1,9 @@
+#section-title,
+#section-form {
+  margin: 0 auto;
+  width: 980px;
+  text-align: center;
+}
+#form-table {
+  display: inline-block;
+}
