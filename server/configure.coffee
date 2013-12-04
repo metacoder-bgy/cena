@@ -10,8 +10,10 @@ module.exports = (app, config) ->
   app.configure ->
     app.set 'views', path.join app.get('client-path'), 'views'
   app.configure 'development', ->
+    console.log 'Development Environment'
     app.enable 'force compile'
     app.disable 'compress'
+    app.locals.pretty = true
     app.use express.errorHandler()
   app.configure 'production', ->
     app.disable 'force compile'
