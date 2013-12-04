@@ -1,6 +1,6 @@
 {
-  "name"         : "Metaphor",
-  "description"  : "An article and topic manage system",
+  "name"         : "Cena",
+  "description"  : "A student meal management system for GCGS",
   "author"       : "RixTox <me@rixtox.com>",
   "version"      : "0.0.1",
   "engine"       : "CoffeeScript ~1.6.3",
