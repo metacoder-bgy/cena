@@ -13,5 +13,3 @@ Thumbs.db
 ######################
 config.coffee
 node_modules
-public/scripts
-public/styles
