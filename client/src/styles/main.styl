@@ -1,7 +1,122 @@
-#section-title, #section-form
-  margin 0 auto
-  width 980px
+@font-face
+  font-family 'Josefin Sans'
+  font-style normal
+  font-weight 400
+  src local('Josefin Sans'), local('JosefinSans'), url("http://themes.googleusercontent.com/static/fonts/josefinsans/v3/xgzbb53t8j-Mo-vYa23n5qRDOzjiPcYnFooOUGCOsRk.woff") format('woff')
+
+@font-face
+  font-family 'Lato'
+  font-style normal
+  font-weight 100
+  src local('Lato Hairline'), local('Lato-Hairline'), url("http://themes.googleusercontent.com/static/fonts/lato/v6/Kom15zUm24dIPfIRiNogNuvvDin1pK8aKteLpeZ5c0A.woff") format('woff')
+
+html
+  height 100%
+
+body
+  background #36b0e3
+  background-image url("../img/cloud.svg"), linear-gradient(to right, #36b0e3 10%, #0071b3 100%)
+  background-repeat no-repeat
+  background-position bottom
+  background-attachment fixed
+  background-size 100%
+  font-family 'Lato'
+  font-weight 100
+  letter-spacing 0.7pt
+  margin 0
+
+ul
+  padding 0
+  margin 0
+
+li
+  list-style none
+
+icon
+  height 50px
+  width 50px
+  font-size 40px
+  overflow hidden
+  &:before
+    margin 5px
+
+.wrapper
+  margin 100px auto
+  width 500px
   text-align center
 
-#form-table
-  display inline-block
+.button
+  cursor pointer
+
+#title
+  color #fff
+  font 400 60pt/40pt 'Josefin Sans'
+  letter-spacing 5pt
+  text-shadow 2px 2px 2px rgba(0,0,0,0.2)
+
+#main-form
+  border-radius 5px
+  overflow hidden
+  box-shadow 0 0 20px rgba(0,0,0,0.3)
+  .card-list-item
+    min-height 200px
+    background #f2f2f2
+  .control-item
+    padding 8px 50px
+    font-size 25px
+    text-align right
+    color #fff
+    position relative
+    transition all 0.3s ease
+    icon
+      position absolute
+      right 0
+      top 0
+    &.add
+      background #00beff
+      &:hover
+        background #1ac4ff
+    &.start
+      background #2cca2c
+      &:hover
+        background #3cd53c
+    &.button
+      &:hover
+        text-shadow 0 0 10px rgba(255,255,255,0.5)
+
+.card-item
+  height 50px
+  overflow hidden
+  background #fff
+  position relative
+  color #555
+  text-align left
+  font-size 20px
+  border-bottom solid 1px #eee
+  .input
+    margin-right 50px
+    input
+      border 0
+      width 50%
+      height 50px
+      padding 0
+      float left
+      text-align right
+      font 100 25px 'Lato'
+      letter-spacing 1pt
+      outline none
+      color #555
+  .control
+    background #fff
+    position absolute
+    white-space nowrap
+    right 0
+    top 0
+    bottom 0
+    .message
+      margin-top -8px
+    .shown, .hidden
+      display inline-block
+
+.fail
+  color #dc1d25
