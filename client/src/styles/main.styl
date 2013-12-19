@@ -110,13 +110,20 @@ icon
     background #fff
     position absolute
     white-space nowrap
-    right 0
-    top 0
-    bottom 0
+    right 50px
+    transform translateX(100%)
+    transition all 0.3s
+    &:hover
+      right 0
+      transform translateX(0)
+      box-shadow -1px 0 15px rgba(0,0,0,0.35)
     .message
-      margin-top -8px
+       line-height 50px
+       vertical-align top
     .shown, .hidden
       display inline-block
 
+.success
+  color #2cca2c
 .fail
   color #dc1d25
