@@ -1,4 +1,5 @@
 stylus = require 'stylus'
+nib = require 'nib'
 generate = require './generate'
 
 uri_ext = '.css'
@@ -11,6 +12,7 @@ compiler = (data, options, callback) ->
     callback = options
     options = {}
   stylus_compiler = stylus(data)
+  stylus_compiler.use nib()
   compile_options =
     filename: options.file_path
   if options.env == 'production'

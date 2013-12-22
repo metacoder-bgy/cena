@@ -7,6 +7,7 @@ compilers = [
   require './coffee'
   require './stylus'
 ]
+options = {}
 env = public_uri = source_path = dest_path = ''
 
 compiler = (req, res, next) ->
@@ -23,6 +24,7 @@ compiler = (req, res, next) ->
       file_base_path: file_base_path
       dest_path: file_dest_path
       env: env
+      opt: options
       , callback
   , (err, results) ->
     return res.send err if err
@@ -33,6 +35,7 @@ compiler = (req, res, next) ->
     next()
 
 module.exports = (app) ->
+  options = app.get 'compilers'
   env = app.get 'env' || 'development'
   public_uri = path.resolve app.get 'public-uri' || '/'
   source_path = path.join app.get('client-path'), 'src'
