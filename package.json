@@ -15,7 +15,8 @@
     "request": "~2.30.0",
     "requestify": "~0.1.16",
     "nib": "~1.0.1",
-    "querystring": "~0.2.0"
+    "querystring": "~0.2.0",
+    "buffertools": "~2.0.0"
   },
   "main": "server/index.coffee",
   "devDependencies": {
