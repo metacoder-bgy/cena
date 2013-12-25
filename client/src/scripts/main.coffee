@@ -1,19 +1,27 @@
 @Card = class Card
-  constructor: (@parent, @num = '', @pass = '') ->
-    tmpl = _.template $('#tmpl-card').html()
-    @$el = $(tmpl num: @num, pass: @pass)[0]
-    $('.btn-remove', @$el).click =>
+  constructor: (@parent, @card = '', @pass = '') ->
+    tmpl = _.template $('#tmpl-line').html()
+    @$el = $(tmpl card: @card, pass: @pass)[0]
+    $('.button.icon-remove', @$el).click =>
       @remove()
       false
-    @parent.append @$el
+    $(@$el).hide()
+    @parent.prepend @$el
+    $(@$el).show 300
+    unless @card or @pass
+      $('.input-card', @$el).focus()
+  addMessage: (icon, message, class) =>
+    i = $("<icon class=\"icon-#{icon}\">")
+    m = $("<span>").text message
   getNum: =>
-    $('.card-num', @$el).val()
+    $('.input-card', @$el).val()
   getPass: =>
-    $('.card-pass', @$el).val()
+    $('.input-pass', @$el).val()
   remove: =>
     return if @parent.length() <= 1
-    @parent.remove @
-    @$el.remove()
+    $(@$el).hide 300, =>
+      @parent.remove @
+      @$el.remove()
   go: =>
 
 @CardList = class CardList
@@ -23,6 +31,8 @@
     @list.push new Card @, num, pass
   append: (el) =>
     @$el.append el
+  prepend: (el) =>
+    @$el.prepend el
   length: =>
     @list.length
   indexOf: (card) =>
@@ -34,8 +44,8 @@
       @list.splice index, 1
 
 $(document).ready =>
-  @cardList = new CardList $('#form-table')
+  @cardList = new CardList $('#card-list')
   cardList.add()
-  $('.btn-add').click ->
+  $('.button.add').click ->
     cardList.add()
     false

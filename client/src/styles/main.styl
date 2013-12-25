@@ -42,9 +42,12 @@ icon
   &:before
     margin 5px
 
+form_width = 450px
+box_width = 50px
+
 .wrapper
   margin 100px auto
-  width 500px
+  width form_width
   text-align center
 
 .button
@@ -87,7 +90,7 @@ icon
         text-shadow 0 0 10px rgba(255,255,255,0.5)
 
 .card-item
-  height 50px
+  height box_width
   overflow hidden
   background #fff
   position relative
@@ -96,11 +99,11 @@ icon
   font-size 20px
   border-bottom solid 1px #eee
   .input
-    margin-right 50px
+    margin-right box_width
     input
       border 0
       width 50%
-      height 50px
+      height box_width
       padding 0
       float left
       text-align right
@@ -112,18 +115,16 @@ icon
     background #fff
     position absolute
     white-space nowrap
-    right 50px
+    right box_width
     transform translateX(100%)
     transition all 0.3s
-    &:hover
+    &.slide:hover
       right 0
       transform translateX(0)
       box-shadow -1px 0 15px rgba(0,0,0,0.35)
-    .message
-       line-height 50px
-       vertical-align top
-    .shown, .hidden
-      display inline-block
+    span
+      line-height box_width
+      vertical-align top
 
 .success
   color #2cca2c
