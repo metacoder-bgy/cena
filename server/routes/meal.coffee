@@ -1,6 +1,6 @@
 async = require 'async'
+iconv = require 'iconv-lite'
 request = require 'request'
-buffertools = require 'buffertools'
 stringify = require('querystring').stringify
 
 URIs =
@@ -10,19 +10,23 @@ URIs =
 
 errcode = [
   {
-    str: '\xCD\xF8\xD2\xB3\xB9\xFD\xC6\xDA\x21\x21'
+    str: '网页过期!!'
     msg: 'Cookie Expired'
     code: '0001'
   }
   {
-    str: '\xCE\xDE\xCC\xF5\xD0\xCE\xC2\xEB\x21\x21'
+    str: '无条形码!!'
     msg: 'Please Submit Card Number'
     code: '0002'
   }
   {
-    str: '\xc3\xdc\xc2\xeb\xbb\xf2\xcc\xf5\xd0\xce\xc2\xeb\xb4\xed\xce\xf3\x21\x21'
+    str: '密码或条形码错误!!'
     msg: 'Wrong Password'
     code: '0003'
+  }
+  {
+    msg: 'No Available Weeks'
+    code: '0004'
   }
 ]
 
@@ -32,7 +36,18 @@ for i in [1..5]
     fields["D#{i}#{j}"] = '11'
     fields["D#{i}#{j}j"] = 'A'
 
-exports.start = (req, res) ->
+headers =
+  'content-type': 'application/x-www-form-urlencoded'
+
+done = (err) ->
+  ret =
+    status: if err then 'error' else 'success'
+  if err
+    ret.code = err.code
+    ret.message = err.msg
+  return ret
+
+module.exports = (req, res) ->
   async.waterfall [
 
     # get cookies
@@ -51,19 +66,15 @@ exports.start = (req, res) ->
         hd: '002'
         B1: '\xc8\xb7\xb6\xa8'
       request.post URIs.login,
-        headers:
-          'content-type': 'application/x-www-form-urlencoded'
+        headers: headers
         body: stringify body
         encoding: null
         jar: cookies
       , (err, response, body) ->
-        # res.type 'html'
-        # return res.send body
+        decoded_body = iconv.decode body, 'gbk'
         for e in errcode
-          console.log body, e.str
-          console.log body.toString()
-          if buffertools.indexOf(body, e.str) >= 0
-            return res.send e
+          if e.str and decoded_body.indexOf(e.str) >= 0
+            return res.send done e
         callback null, cookies
 
     # get week list
@@ -72,12 +83,14 @@ exports.start = (req, res) ->
         jar: cookies
         encoding: null
       , (err, response, body) ->
-        # res.send body
-        callback null, cookies, body
-        .toString()
-        .match(/20\d{7}/g)
-        .filter (v,i,s) ->
-          s.indexOf(v) == i
+        week_list = body
+          .toString()
+          .match(/20\d{7}/g)
+          .filter (v,i,s) ->
+            s.indexOf(v) == i
+        unless week_list.length
+          return res.send done errcode[3]
+        callback null, cookies, week_list
 
     # book meal
     (cookies, week_list, callback) ->
@@ -90,15 +103,10 @@ exports.start = (req, res) ->
       for w in week_list
         body.m_date = w
         request.post URIs.booking,
-          headers:
-            'content-type': 'application/x-www-form-urlencoded'
+          headers: headers
           body: stringify body
           jar: cookies
           encoding: null
         , (err, response, body) ->
-          res.send body
+          res.send done null
   ]
-
-exports.check = (req, res) ->
-  request.get(URIs.cookies).then (response) ->
-    res.send response.getHeader 'set-cookie'

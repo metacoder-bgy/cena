@@ -13,10 +13,9 @@
     "stylus": "~0.33.1",
     "uglify-js": "~2.4.0",
     "request": "~2.30.0",
-    "requestify": "~0.1.16",
     "nib": "~1.0.1",
     "querystring": "~0.2.0",
-    "buffertools": "~2.0.0"
+    "iconv-lite": "~0.2.11"
   },
   "main": "server/index.coffee",
   "devDependencies": {

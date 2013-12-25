@@ -4,6 +4,5 @@ http = require './http'
 
 module.exports = (app) ->
   app.get '/'     , home
-  app.get '/start', meal.start
-  app.get '/check', meal.check
+  app.get '/start', meal
   app.get '*'     , http.http404
