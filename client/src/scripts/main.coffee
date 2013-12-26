@@ -2,6 +2,9 @@
   constructor: (@parent, @card, @pass) ->
     tmpl = _.template $('#tmpl-line').html()
     @$el = $(tmpl card: @card, pass: @pass)[0]
+    $('span.message', @$el).click =>
+      $('.control', @$el).toggleClass 'show'
+      false
     $('.button.icon-remove', @$el).click =>
       @remove()
       false

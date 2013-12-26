@@ -13,3 +13,4 @@ Thumbs.db
 ######################
 config.coffee
 node_modules
+npm-debug.log
