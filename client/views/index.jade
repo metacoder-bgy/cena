@@ -1,29 +1,28 @@
 extends layouts/default
 
 block body
-  section#section-title
-    h1 Cena
-    a.btn-add(href='#') Add
-    |  
-    a.btn-start(href='#') Start
-  section#section-form
-    script#tmpl-card(type='text/x-underscore')
-      <tr class="table-row">
-      <td>
-      <input type="text" class="card-num" placeholder="Card Number" value="<%= num %>">
-      </td>
-      <td>
-      <input type="password" class="card-pass" placeholder="Password" value="<%= pass %>">
-      </td>
-      <td>
-      <a href="#" class="btn-remove">Delete</a>
-      </td>
-      </tr>
-    table#form-table
-      tbody
-        tr.table-header
-          th.cln-no Card Number
-          th.cln-psw Password
-          th.cln-ctrl
+  script#tmpl-line(type='text/x-underscore')
+    li.card-item
+      .input
+        input.input-card(placeholder='Number',value!='<%= card %>')
+        input.input-pass(type='password', placeholder='Password',value!='<%= pass %>')
+      .control
+        span.message
+        span.button
+          icon.button.icon-remove
+
+  .wrapper
+    h1#title Cena
+    form#main-form
+      ul#form-list
+        li.control-item.button.add
+          span Add a new line
+          icon.icon-add
+        li.card-list-item
+          ul#card-list
+        li.control-item.button.start
+          span Start
+          icon.icon-tick
+
 block scripts
   script(src='scripts/main.js')

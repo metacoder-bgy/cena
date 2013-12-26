@@ -1,20 +1,58 @@
 @Card = class Card
-  constructor: (@parent, @num = '', @pass = '') ->
-    tmpl = _.template $('#tmpl-card').html()
-    @$el = $(tmpl num: @num, pass: @pass)[0]
-    $('.btn-remove', @$el).click =>
+  constructor: (@parent, @card, @pass) ->
+    tmpl = _.template $('#tmpl-line').html()
+    @$el = $(tmpl card: @card, pass: @pass)[0]
+    $('.button.icon-remove', @$el).click =>
       @remove()
       false
-    @parent.append @$el
-  getNum: =>
-    $('.card-num', @$el).val()
+    $('input', @$el).keydown (e) =>
+      if e.keyCode == 13
+        @go()
+    $(@$el).hide()
+    @parent.prepend @$el
+    $(@$el).show 300, =>
+      unless @card or @pass
+        $('.input-card', @$el).focus()
+  addMessage: (icon, message, style = '') =>
+    console.log style
+    if style instanceof Array
+      style = style.join ' '
+    if typeof style == 'string'
+      style = "message #{style}"
+    $wrap = $('span.message', @$el)
+      .removeAttr('class')
+      .addClass(style)
+      .html('')
+    $control = $('.control', @$el)
+    unless icon and message
+      return $control.removeClass 'slide'
+    $icon = $("<icon class=\"icon-#{icon}\">")
+    $message = $("<span>").text message
+    $control.addClass 'slide'
+    $wrap.append($icon).append($message)
+  getCard: =>
+    @card ? $('.input-card', @$el).val()
   getPass: =>
-    $('.card-pass', @$el).val()
+    @pass ? $('.input-pass', @$el).val()
   remove: =>
     return if @parent.length() <= 1
-    @parent.remove @
-    @$el.remove()
+    $(@$el).hide 300, =>
+      @parent.remove @
+      @$el.remove()
   go: =>
+    card = @getCard()
+    pass = @getPass()
+    return unless card and pass
+    @addMessage 'loading icon-spin', 'Working'
+    $.post 'start',
+      card: card
+      pass: pass
+    , (data) =>
+      console.log data
+      if data.status == 'success'
+        @addMessage 'tick', 'Done', 'success'
+      if data.status == 'error'
+        @addMessage 'cross', data.message, 'fail'
 
 @CardList = class CardList
   constructor: (@$el) ->
@@ -23,6 +61,11 @@
     @list.push new Card @, num, pass
   append: (el) =>
     @$el.append el
+  prepend: (el) =>
+    @$el.prepend el
+  start: =>
+    for item in @list
+      item.go()
   length: =>
     @list.length
   indexOf: (card) =>
@@ -34,8 +77,11 @@
       @list.splice index, 1
 
 $(document).ready =>
-  @cardList = new CardList $('#form-table')
+  @cardList = new CardList $('#card-list')
   cardList.add()
-  $('.btn-add').click ->
+  $('.button.add').click ->
     cardList.add()
+    false
+  $('.button.start').click ->
+    cardList.start()
     false
