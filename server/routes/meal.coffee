@@ -20,13 +20,18 @@ errcode = [
     code: '0002'
   }
   {
-    str: '密码或条形码错误!!'
-    msg: 'Wrong Password'
+    str: '此条形码没有权限!!'
+    msg: 'Wrong Number'
     code: '0003'
   }
   {
-    msg: 'No Available Weeks'
+    str: '密码或条形码错误!!'
+    msg: 'Wrong Password'
     code: '0004'
+  }
+  {
+    msg: 'No Available Weeks'
+    code: '0005'
   }
 ]
 
@@ -72,6 +77,7 @@ module.exports = (req, res) ->
         jar: cookies
       , (err, response, body) ->
         decoded_body = iconv.decode body, 'gbk'
+        console.log decoded_body
         for e in errcode
           if e.str and decoded_body.indexOf(e.str) >= 0
             return res.send done e

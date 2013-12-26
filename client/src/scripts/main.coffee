@@ -5,6 +5,8 @@
     $('span.message', @$el).click =>
       $('.control', @$el).toggleClass 'show'
       false
+    .mouseout =>
+      $('.control', @$el).removeClass 'show'
     $('.button.icon-remove', @$el).click =>
       @remove()
       false
