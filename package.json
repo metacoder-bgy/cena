@@ -18,6 +18,9 @@
     "stylus": "~0.41.3"
   },
   "main": "server/index.coffee",
+  "scripts": {
+    "start" : "coffee server/index.coffee"
+  },
   "devDependencies": {
     "coffee-script": "~1.6.3"
   },
