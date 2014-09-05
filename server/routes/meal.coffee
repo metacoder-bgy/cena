@@ -4,9 +4,9 @@ request = require 'request'
 stringify = require('querystring').stringify
 
 URIs =
-  cookies: 'http://bgy.gd.cn/mis/info/menu_info.asp?type=%D1%A7%C9%FA%CD%F8%D2%B3'
-  login: 'http://bgy.gd.cn/mis/info/list.asp'
-  booking: 'http://bgy.gd.cn/mis/info/dc_info/dc3_new.asp'
+  cookies: 'http://bgy.gd.cn:8080/mis/info/menu_info.asp?type=%D1%A7%C9%FA%CD%F8%D2%B3'
+  login: 'http://bgy.gd.cn:8080/mis/info/list.asp'
+  booking: 'http://bgy.gd.cn:8080/mis/info/dc_info/dc3_new.asp'
 
 errcode = [
   {
